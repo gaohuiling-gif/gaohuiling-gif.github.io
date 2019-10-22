@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div style="height:60px;line-height:60px;font-size:30px">
+            {{$route.params.type}}
+        </div>
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
+    </div>
+    <template id="one1">
+        <div>
+            <div v-for="(i,$value,$index) in data">
+                <div style="width:50%;height:60px;line-height:60px">
+                    <h5 style="line-height:40px;font-size:26px">{{$value=='girl'?'女生分类':'男生分类'}}</h5>
+                </div>
+                <div style="width:80%;height:auto;line-height:30px;margin:0 auto">
+                    <div v-for="(a,$index) in i">
+                        <div v-for="(j,$value,$index) in a">
+                            <a :href="'#/one2/'+$value+'/'+j.cid+'/'+j.relatedName" >
+                                <p>{{$value}}</p>
+                                <div>
+                                    <p style="color:#000;font-size:16px;display: inline-block;" v-for="(d,$index) in j.list">{{d}}
+                                        {{j.list.length-1==$index?'':'|'}} </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="one2">
+        <div>
+            <!-- one2-->
+            <div style="width:80%;height:auto;margin:0 auto">
+                <h5>全部</h5>
+                <div style="width:100%;height:60px;overflow: hidden;">
+                    <div v-for='i in data.class'
+                        style="width:10%;height:60px;line-height:60px;font-size:18px;float:left">
+                       <p>{{i.name}}</p>
+                    </div>
+                    <div v-for='i in data.tag'
+                        style="float: left;width:10%;height:60px;font-size:18px;line-height:60px;">
+                       <p>{{i.name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div v-for="i in data1" style="overflow:hidden;margin-bottom:20px;margin-left:4%">
+                <div style="float:left;width:85px;height:120px;">
+                    <img style="width:100%;height:100%;" :src="i.cover">
+                </div>
+                <div style="float:left;width:80%;margin-left:4%">
+                    <h5 style="font-size:24px;line-height:32px;color:crimson">{{i.title}}</h5>
+                    <p style="font-size:16px;color: #ccc;margin-bottom:4px;">{{i.author}}</p>
+                    <p style="font-size:12px;color:#000">{{i.tags}}</p>
+                    <p style="font-size:12px;color:#999999;line-height:22px;margin-bottom:8px;color:#000">
+                        {{i.desc}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="vue-resource.js"></script>
+<script type="text/javascript">
+    var router = new VueRouter({
+        routes: [{
+            path: '/',
+            redirect: '/one1/分类'
+        },
+        {
+            path: '/one1/:type',
+            component: {
+                template: '#one1',
+                data() {
+                    return {
+                        data: ''
+                    }
+                },
+                created() {
+                    this.$http.post('http://walden1.shuqireader.com/webapi/rank/classrelation?_=1567407404330', {
+                        type: 1,
+                        timestamp: 1567407404328,
+                        sign: '2cac304d76749f9863d0d7e0075e3944',
+                        shuqi_h5: ''
+                    }, {
+                        emulateJSON: true
+                    }).then((data) => {
+                        console.log(data.data.data)
+                        this.data = data.data.data
+                    })
+                }
+            }
+        },
+        {
+            path: '/one2/:type/:uid/:name',
+            component: {
+                template: '#one2',
+                data() {
+                    return {
+                        data: '',
+                        data1: ''
+                    }
+                },
+                created() {
+                    var uid = this.$route.params.uid;
+                    var name = this.$route.params.name;
+                    this.$http.post('http://walden1.shuqireader.com/webapi/rank/classrelation?_=1571220235971', {
+                        type: 2,
+                        cid: uid,
+                        timestamp: 1571220235968,
+                        sign: '4e97b9d8142361752e1e4fb5c0b48134',
+                        shuqi_h5: '',
+                    }, {
+                        emulateJSON: true
+                    }).then(data => {
+                        console.log(data.data.data)
+                        this.data = data.data.data;
+                    })
+                    this.$http.get(
+                        'http://read.xiaoshuo1-sm.com/novel/i.php?do=is_caterank&p=1&page=1&words=&shuqi_h5=&onlyCpBooks=1&secondCate=%E7%8E%B0%E4%BB%A3%E8%A8%80%E6%83%85&sort=monthHot&_=1571222214835', {
+                        params: {
+                            do: 'is_caterank',
+                            p: 1,
+                            page: 1,
+                            words: '',
+                            shuqi_h5: '',
+                            onlyCpBooks: 1,
+                            secondCate: name,
+                            sort: 'monthHot',
+                            _: 1571222214835,
+                        }
+                    }).then(data => {
+                        console.log(data.data.data)
+                        this.data1 = data.data.data
+                    })
+                }
+            }
+        }
+        ]
+    });
+    new Vue({
+        el: '#box',
+        router,
+        mounted() {
+            console.log(this.$route)
+        },
+        watch: {
+            '$route.params.type'(a, b) {
+                console.log(a, b)
+
+            }
+        }
+    })
+</script>
+
+</html>

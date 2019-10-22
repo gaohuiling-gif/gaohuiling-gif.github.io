@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 100%;
+            height: auto;
+            margin-top: 50px;
+        }
+
+        .bg {
+            width: 100%;
+        }
+
+        .big_st {
+            float: right;
+            width: 400px;
+        }
+
+        .big_st .st {
+            line-height: 50px;
+            height: 50px;
+            text-align: center;
+            float: left;
+            width: 50px;
+        }
+
+        .bigBox {
+            width: 80%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .lunbo-enter {
+            opacity: 0;
+        }
+
+        .lunbo-enter-active,
+        .lunbo-leave-active {
+            transition: .5s;
+        }
+
+        .lunbo-enter-to,
+        .lunbo-leave {
+            opacity: 1;
+        }
+
+        .lunbo-leave-to {
+            opacity: 0;
+        }
+
+        .cts {
+            width: 18%;
+            height: 350px;
+            float: left;
+            display: inline-block;
+            /*border:1px #000 solid;*/
+            margin-right: 1%;
+            margin-left: 1%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .cts .div1 {
+            padding-left: 2%;
+            box-sizing: border-box;
+            width: 100%;
+            background-color: #ccc;
+            height: 200px;
+        }
+
+        .cts .div1 img {
+            width: 80%;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+            margin-left: 10%;
+        }
+
+        .cts .div2 {
+            border-top: 1px #ccc solid;
+            margin-top: 20px;
+            padding-left: 4%;
+        }
+
+        .cts .div2 p {
+            font-size: 18px;
+            line-height: 30px;
+        }
+
+        .cts .div2 .p_2 {
+            color: #ccc;
+
+        }
+
+        .cts .div2 div {
+            width: 50px;
+            height: 50px;
+            border: 1px #ccc solid;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .big_st .ou {
+            color: green;
+            border-bottom: 2px solid green;
+            box-sizing: border-box;
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div style="height: 60px;width:60%;margin: 0 auto;overflow: hidden;position: relative;">
+            <div style="float: left;line-height: 60px;width:33.33%;height:100%;" v-for="i in arr">
+                <p style="text-align:center"><a :href="i.path" class="nav"
+                        style="color: #fff;z-index: 999;position: absolute;;top:0;">
+                        {{i.name}}
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div style="min-height: 500px;">
+            <router-view></router-view>
+        </div>
+    </div>
+    <template id="one1">
+        <div style="position: relative;width:100%;height:663px;">
+            <div
+                style="width:100%;height:663px;background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('http://57e243aaa779a.t73.qifeiye.com/qfy-content/uploads/2016/10/f549634402d680ae8cccd5a6039000b5.jpg');position: absolute;top:-60px;left:0;">
+
+            </div>
+            <!-- <div
+                style="width:100%;height:663px;background-color: rgba(28,28,28,0.7);position: absolute;top:-60px;left:0">
+                <div style="width:60%;height:100px;margin:0 auto;margin-top:230px">
+                    <transition v-for="(i,$index) in arr">
+                        <div v-show="index==$index" style="position: absolute;width: 100%;color: #FFFFFF;">
+                            <h1 style="line-height: 80px;">{{i.title}}</h1>
+                            <p>{{i.tits}}</p>
+                        </div>
+                    </transition>
+                </div>
+            </div> -->
+            <div
+                style="width:100%;height:663px;background-color: rgba(28,28,28,0.7);position: absolute;top:-60px;left:0">
+                <div style="width:60%;height:100px;margin:0 auto;margin-top:230px">
+                    <p style="color:#fff;text-align:center;font-size:36px;line-height: 44px;">我们无法做到完美， 但追求完美能让人卓越</p>
+                    <p style="color:#fff;text-align:center;font-size:18px;line-height: 44px;">Perfection’snot
+                        attainable, but if we chase it we can catch excellence.</p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="one2">
+        <div>
+            <div style="position: relative;width:100%;height:285px;">
+                <div
+                    style="width:100%;height:345px;background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvMDViZjRkNzAxMDU2NTNkNjI2ODQ2NmY4ZGY4NzFmM2YuanBn.jpg');position: absolute;top:-60px;left:0;">
+
+                </div>
+                <div
+                    style="width:100%;height:345px;background-color: rgba(28,28,28,0.7);position: absolute;top:-60px;left:0">
+
+                </div>
+
+            </div>
+            <div
+                style="margin:0 auto;width:100%;height:756px; background-repeat: no-repeat; background-image: url('https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMDkvZGMyODkyNzE4YWUxZTY2NDFmNTlkNmU2YjRjN2JhNmIuanBn.jpg');padding-top:50px">
+
+                <p style="text-align:center;color:#494949;font-size:30px;line-height:60px;">产<span
+                        style="display: inline-block;width:70px;height:60px;line-height:60px;border-bottom:aquamarine 2px solid">品发</span>布
+                </p>
+                <p style="text-align:center;font-size:14px;color:#696969;line-height:58px;">応捠捡换攴朰朸妀夲夳夵壱，売圢圤圥圦圧圪咐咑厺厼厽帄帇
+                </p>
+                <div style="width:766px;height:500px;margin:0 auto">
+                    <p style="text-align:center"><img
+                            src="https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMDkvNGQxZGJmMGU0MTg5YWUxYWU1ZjNmZDkyZjc3OWRhMGItNzY2eDUwMC5wbmc_p_p100_p_3D.png"
+                            style="width:100%;height:100%" /></p>
+                </div>
+            </div>
+
+        </div>
+
+
+    </template>
+    <template id="one3">
+        <div>
+            <div style="position: relative;width:100%;height:285px;">
+                <div
+                    style="width:100%;height:345px;background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOTk4ZGE5MWY4MGZiNDg3NjU4MjI2MDQ1NzBhY2RmNDYuanBn.jpg');position: absolute;top:-60px;left:0;">
+
+                </div>
+                <div
+                    style="width:100%;height:345px;background-color: rgba(28,28,28,0.7);position: absolute;top:-60px;left:0">
+                </div>
+            </div>
+
+            <div class="clearfix" style="width:80%;height:auto;margin-left:10%;margin-top:50px;">
+                <div style="overflow: hidden;width: 100%;" class="clearfix">
+                    <div style="width:20%;margin:0 auto;height:600px;background-color: rgba(244,244,244,0.5);margin-bottom:15px;float:left"
+                        class="clearfix">
+
+                        <div class="clearfix" style="margin-left:15%;margin-top:50px;margin-top:-30px">
+                            <div v-for="i in tea_title" class="st clearfix" @click="type=i"
+                                style="float:left;width:100%;height:50px;">
+                                <p>{{i}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width:70%;float:left;margin-left:10%">
+                        <div style="width:100%;height:70px;border-bottom:1px #ccc solid;margin-bottom:10px">
+                            <div style="float:left;line-height:70px;font-size:20px;color: #000;">资讯发布</div>
+                            <div
+                                style="float:right;width:105px;height:30px;border-radius:10px;border:1px #0DAEB8 solid;margin-top:20px">
+                                <p style="text-align:center;line-height:30px;color:#0DAEB8;">联系我们</p>
+                            </div>
+                        </div>
+                        <div v-if="type=='全部'" style="width:100%;height:auto;" class="clearfix">
+                            <div style="width:100%;height:160px;" v-for="i in tea_info" style="overflow: hidden;">
+                                <div style="float:right;width:60%;height:100%">
+                                    <h5 style="font-size:18px;line-height:24px;color:#000"><a :href="'#/one4/'+i.uid"
+                                            style="color:#666666">{{i.title}}</a></h5>
+                                    <p style="font-size:13px;line-height:26px;color:aquamarine">发布日期：2017-03-14</p>
+                                    <p style="font-size:13px;line-height:26px;color:#999999">
+                                        {{i.content}}
+                                    </p>
+                                </div>
+                                <div style="float:left;width:200px;height:130px;">
+                                    <img :src="i.url" style="width:230px;height:130px;">
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div v-else style="width:100%" class="clearfix">
+
+                            <div style="width:100%;height:160px;" v-for="i in tea_info" v-if="i.type==type">
+
+                                <div style="float:right;width:60%;height:100%">
+                                    <h5 style="font-size:18px;line-height:24px;color:#000"><a :href="'#/one4/'+i.uid"
+                                            style="color:#666666">{{i.title}}</a></h5>
+                                    <p style="font-size:13px;line-height:26px;color:aquamarine">发布日期：2017-03-14</p>
+                                    <p style="font-size:13px;line-height:26px;color:#999999">
+                                        {{i.content}}
+                                    </p>
+                                </div>
+                                <div style="float:left;width:200px;height:130px;">
+                                    <img :src="i.url" style="width:230px;height:130px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="one4">
+        <div>
+            <div style="position: relative;width:100%;height:285px;">
+                <div
+                    style="width:100%;height:345px;background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOTk4ZGE5MWY4MGZiNDg3NjU4MjI2MDQ1NzBhY2RmNDYuanBn.jpg');position: absolute;top:-60px;left:0;">
+
+                </div>
+                <div
+                    style="width:100%;height:345px;background-color: rgba(28,28,28,0.7);position: absolute;top:-60px;left:0">
+                </div>
+            </div>
+            <div style="width:80%;height:auto;margin-left:10%;margin-top:50px" v-for="i in tea_info" v-if="i.uid==value">
+                <h5 style="font-size:28px;line-height:40px;color:#000"><a :href="'#/one4/'+i.uid"
+                        style="color:#666666">{{i.title}}</a></h5>
+                <div style="width:300px;height:200px;margin-top:50px;margin-bottom:50px">
+                    <img :src="i.url" style="width:300px;height:200px;">
+                </div>
+                <p style="font-size:13px;line-height:26px;color:aquamarine">发布日期：2017-03-14</p>
+                <p style="font-size:13px;line-height:26px;color:#000">
+                    {{i.content}}
+                </p>
+            </div>
+        </div>
+    </template>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+
+    var router = new VueRouter({
+        routes: [
+            {
+                path: '/', component: {
+                    template: '#one1',
+                    data() {
+                        return {
+                            index: 0,
+                            arr: [{
+                                title: '我们无法做到完美， 但追求完美能让人卓越',
+                                tits: 'Perfection’snot attainable, but if we chase it we can catch excellence.'
+                            },
+                            {
+                                title: '我们无法做到完美',
+                                tits: 'Perfection’snot attainable'
+                            },
+                            {
+                                title: '但追求完美能让人卓越',
+                                tits: 'But if we chase it we can catch excellence.'
+                            }
+                            ]
+                        }
+                    }
+                }
+            },
+            { path: '/one2', component: { template: '#one2' } },
+            {
+                path: '/one4/:uid', component: {
+                    template: '#one4',
+                    data() {
+                        return {
+                            value: this.$route.params.uid,
+                            tea_info: [
+                                {
+                                    uid: 1,
+                                    title: '三大能源停征价格调节基金为煤炭资源税改革清路',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvMDViZjRkNzAxMDU2NTNkNjI2ODQ2NmY4ZGY4NzFmM2YtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '全部发布',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 2,
+                                    title: '北京130多家工业企业采取停限产措施应对雾霾',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWVmMDY3ODQ0ZDIzZmFiZDA2Y2NkNjVkZGY2MWQyZDgtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '全部发布',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 3,
+                                    title: '喝茶的好处有哪些 6大好处告诉你',
+                                    url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvNjczNTEyZGI2NGM2N2U0MzdjMjMxNGMyYzc3MjRmM2YtMjAweDEzMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '全部新闻',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 4,
+                                    title: '北京130多家工业企业采取停限产措施应对雾霾',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWFjMDViN2VmMzVkYmVhOGU5ZTI2MDQ2OGY4M2E1MjEtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '公司新闻',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 5,
+                                    title: '三大能源停征价格调节基金为煤炭资源税改革清路',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWVmMDY3ODQ0ZDIzZmFiZDA2Y2NkNjVkZGY2MWQyZDgtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '公司新闻',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 6,
+                                    title: '排污费价格要高于治污成本',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWFjMDViN2VmMzVkYmVhOGU5ZTI2MDQ2OGY4M2E1MjEtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+
+                                    type: '公司新闻',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 7,
+                                    title: '北京130多家工业企业采取停限产措施应对雾霾',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWFjMDViN2VmMzVkYmVhOGU5ZTI2MDQ2OGY4M2E1MjEtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '行业资讯',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 8,
+                                    title: '北京130多家工业企业采取停限产措施应对雾霾',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWFjMDViN2VmMzVkYmVhOGU5ZTI2MDQ2OGY4M2E1MjEtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '行业资讯',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                path: '/one3', component: {
+                    template: '#one3',
+                    data() {
+                        return {
+                            type: '全部',
+                            tea_title: ['', '全部发布', '公司新闻', '行业资讯'],
+                            tea_info: [
+                                {
+                                    uid: 1,
+                                    title: '三大能源停征价格调节基金为煤炭资源税改革清路',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvMDViZjRkNzAxMDU2NTNkNjI2ODQ2NmY4ZGY4NzFmM2YtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '全部发布',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 2,
+                                    title: '北京130多家工业企业采取停限产措施应对雾霾',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWVmMDY3ODQ0ZDIzZmFiZDA2Y2NkNjVkZGY2MWQyZDgtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '全部发布',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 3,
+                                    title: '喝茶的好处有哪些 6大好处告诉你',
+                                    url: 'https://ccdn.goodq.top/caches/9b69daffc17579b848483c854813cad2/aHR0cHM6Ly81Y2RkM2FhNWM0NmVhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMDQvNjczNTEyZGI2NGM2N2U0MzdjMjMxNGMyYzc3MjRmM2YtMjAweDEzMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '全部新闻',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 4,
+                                    title: '北京130多家工业企业采取停限产措施应对雾霾',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWFjMDViN2VmMzVkYmVhOGU5ZTI2MDQ2OGY4M2E1MjEtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '公司新闻',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 5,
+                                    title: '三大能源停征价格调节基金为煤炭资源税改革清路',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWVmMDY3ODQ0ZDIzZmFiZDA2Y2NkNjVkZGY2MWQyZDgtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '公司新闻',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 6,
+                                    title: '排污费价格要高于治污成本',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWFjMDViN2VmMzVkYmVhOGU5ZTI2MDQ2OGY4M2E1MjEtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+
+                                    type: '公司新闻',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 7,
+                                    title: '北京130多家工业企业采取停限产措施应对雾霾',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWFjMDViN2VmMzVkYmVhOGU5ZTI2MDQ2OGY4M2E1MjEtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '行业资讯',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                                {
+                                    uid: 8,
+                                    title: '北京130多家工业企业采取停限产措施应对雾霾',
+                                    url: 'https://ccdn.goodq.top/caches/0aa02806352a2c565f61961c812e84a8/aHR0cHM6Ly81N2UyNDNhYWE3NzlhLnQ3My5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTYvMTAvOWFjMDViN2VmMzVkYmVhOGU5ZTI2MDQ2OGY4M2E1MjEtMTgweDEyMC5qcGc_p_p100_p_3D.jpg',
+                                    type: '行业资讯',
+                                    content: '起飞页的工作团队是一群热爱互联网及软件事业的大伙伴和小伙伴，经验丰富、成熟稳定，基于对网站出版行业的热爱、对人人都能做出精美网站的向往，公司投入一千万元人民币，历时两年时间打造出起飞页平台。截至2015年底，在起飞页上创建的网站已超过10万+。',
+                                },
+                            ]
+                        }
+                    }
+                },
+            },
+        ]
+    })
+    new Vue({
+        el: "#box",
+        data: {
+            arr: [
+                { name: '首页', path: '#/' },
+                { name: '产品发布', path: '#/one2' },
+                { name: '资讯发布', path: '#/one3' },
+            ]
+        },
+        router
+    })
+</script>
+
+</html>

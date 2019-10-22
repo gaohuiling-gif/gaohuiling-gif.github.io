@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>QQ音乐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .g-h {
+            height: 100px;
+            width: 100%;
+            background-color: blue;
+            font-size: 30px;
+            text-align: center;
+            color: #fff;
+            line-height: 100px;
+        }
+
+        .search {
+            width: 80%;
+            height: 60px;
+            margin: 0 auto;
+        }
+
+        .search input {
+            width: 100%;
+            height: 26px;
+            margin-top: 14px;
+        }
+
+        .recommend {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .recommend div {
+            display: inline-block;
+            border: 1px #000 solid;
+            padding-left: 5px;
+            padding-right: 5px;
+            height: 50px;
+            font-size: 20px;
+            border-radius: 6px;
+            text-align: center;
+            line-height: 50px;
+            background-color: #ddd;
+            margin: 2px 5px;
+        }
+
+        .lst {
+            line-height: 80px;
+            width: 90%;
+            margin: 0 auto;
+            font-size: 20px;
+            border-bottom: 1px #000 dashed;
+        }
+
+        .g-lst {
+            background-color: #fff;
+        }
+
+        .g-lst:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        .g-lst:nth-child(even) {
+            background-color: #ccc;
+        }
+
+        .lst span {
+            padding-right: 10px;
+        }
+
+        .like {
+            float: right;
+            margin-right: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" v-cloak="">
+        <div style="height: 60px;background: #CCCCCC;">
+            <div style="line-height: 60px;width:20%;float:left;" v-for="i in arr">
+                <p style="text-align:center"><a :href="i.path">
+                        {{i.name}}
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div style="min-height: 500px;">
+            <router-view></router-view>
+        </div>
+        <!-- <div style="height: 160px;background: #CCCCCC;"> -->
+        <!-- 播放音乐 -->
+        <div style="width:80%;height:50px;margin:0 auto;">
+            <!-- <audio :src="url" controls autoplay style="width:80%;"></audio> -->
+            <audio :src="url" controls autoplay style="width:100%;height:50px;position:fixed;bottom:30px;left:0"></audio>
+        </div> 
+        <!-- </div> -->
+    </div>
+    <template id="one1">
+        <div>
+            <!-- 首页搜索 -->
+            <div class="search">
+                <input type="text" v-model="value1" style="font-size: 20px;text-indent:2em" @keyup.enter="sou">
+            </div>
+            <!-- 搜索关键字 -->
+            <div v-if="hotkey" style="height: 110px;overflow: hidden;" class="recommend clearfix">
+                <span v-for="i in hotkey" @click="value_hotkey(i.k)"
+                    style="padding: 10px 15px;margin: 5px 10px;display: inline-block;border: 1px solid #CCCCCC;border-radius: 4px;">
+                    {{i.k}}
+                </span>
+            </div>
+            <!-- 歌曲列表 -->
+            <div class="clearfix g-lst">
+                <div class="lst clearfix">
+                    <div class="clearfix" v-for="(i,$index) in songlist">
+                        <span>{{$index+1}}</span>
+                        <a :href="'#/one5/'+i.songmid+'/'+i.songname"
+                            :style="{color:songmid==i.songmid?'red':''}">{{i.songname}}</a>
+
+                        <span class="like">❤</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="one2">
+        <div>
+            <!-- 排行榜 -->
+            <div style="width:80%;margin:0 auto" v-for="i in topList">
+                <div
+                    style="width:100%;height:300px;margin-top:50px;background:#cccccc;border-radius: 8px;overflow: hidden;">
+                    <div style="width:60%;float:left;height:300px;padding-left:3%;box-sizing: border-box;">
+                        <h5 style="font-size:36px;line-height:60px">{{i.topTitle}}</h5>
+                        <div v-for="(j,index) in i.songList" style="overflow: hidden;">
+                            <p style="line-height: 60px;font-size:20px;color:#fff;float:left;display: block;">
+                                <span>{{index+1}}</span> {{j.songname}}
+                            </p>
+                            <p style="line-height: 60px;font-size:20px;color:#fff;float:right;display: block;">
+                                {{j.singername}}</p>
+                        </div>
+                        <span style="width:100px;height:50px;border:1px #000 solid;border-radius:4px;">
+                            <a :href="'#/ranking_list/'+i.id">歌单详情</a>
+                        </span>
+                    </div>
+                    <div style="width:300px;height:300px;float:right;position: relative;">
+                        <img :src="i.picUrl" style="width:100%;height:100%" />
+                        <p style="position: absolute;left:30px;bottom:20px;color:#fff">{{i.listenCount}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <!-- 排行榜详情 -->
+    <template id="ranking_list">
+        <div>
+            <div v-for="(i,index) in songlist" style="width:80%;height:auto;margin:0 auto">
+                <div>
+                    <p style="font-size:30px;font-size:18px;overflow: hidden;">
+                        <a :href="'#/one5/'+i.data.songmid+'/'+i.data.songname">
+                            <span style="float:left;width:50px;color:cornflowerblue">{{index+1}}.</span>
+                            <span style="float:left;color:#000">{{i.data.songname}}</span>
+                            <span style="float:right;color:#000">{{i.data.singer[0].name}}</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="one3">
+        <div>
+            歌单
+        </div>
+    </template>
+    <template id="one4">
+        <div>
+            <!-- 歌手 -->
+            <div style="width: 80%;margin: 0 auto;overflow: hidden;" v-for="i in singerlist">
+                <div style="width:50%;height:auto;float:left;padding-left:3%;box-sizing: border-box;">
+                    <p style="font-size:18px;line-height:40px">{{i.Fsinger_name}}</p>
+                </div>
+                <div style="width:50%;height:auto;float:left;overflow: hidden;">
+                    <p style="font-size:18px;line-height:40px;float:right"><a :href="'#/list/'+i.Fsinger_mid"
+                            style="color:#000">歌手详情</a></p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <!-- 歌手详情 -->
+    <template id="list">
+        <div>
+            <div style="width: 70%;margin: 0 auto;height:auto;">
+                <!-- 歌手名字 -->
+                <p style="font-size:26px;line-height:36px;">{{songname}}</p>
+                <!-- <h1>{{i.musicData.songname}}</h1> -->
+                <div v-for="i in sangmlist" style="font-size:18px;height:auto;background-color:aqua">
+                    <p style="line-height:36px;font-size:18px;text-align:center">
+                        <a :href="'#/one5/'+i.musicData.songmid+'/'+i.musicData.songname" style="color:#000">
+                            {{i.musicData.songname}}
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="one5">
+        <div>
+            <!-- 播放 -->
+            播放
+            <div style="width:80%;height:auto;border-radius:4px;">
+                <div v-for="i in arr" style='margin-left:10%'>
+                    <p style="font-size:20px;line-height:30px;">歌曲名字:{{i}}</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="vue-resource.js"></script>
+<script>
+    var router = new VueRouter({
+        routes: [
+            {
+                path: '/', component: {
+                    template: '#one1',
+                    redirect: '/one1/1',
+                    data() {
+                        return {
+                            value1: '有点甜',
+                            hot: '',
+                            hotkey: '',
+                            songlist: '',
+                            songmid: '',
+                            song_url: '',
+                        }
+                    },
+
+                    methods: {
+                        songplay(a) {
+                            this.songmid = a;
+                            this.$http.jsonp('https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?g_tk=1278911659&hostUin=0&format=jsonp&callback=callback&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0&cid=205361747&uin=0&songmid=' + a + '&filename=C400' + a + '.m4a&guid=3655047200', {
+                                jsonpCallback: 'callback'
+                            }).then((data) => {
+                                var filename = data.data.data.items[0].filename;
+                                var vkey = data.data.data.items[0].vkey;
+                                this.song_url = `
+                        http://dl.stream.qqmusic.qq.com/${filename}?vkey=${vkey}&guid=3655047200&fromtag=66
+                    `
+                                console.log(data);
+                            }, (err) => {
+
+                            })
+                        },
+                        value_hotkey(a) {
+                            this.value1 = a;
+                            this.sou();
+                        },
+                        sou() {
+                            this.$http.jsonp('https://c.y.qq.com/soso/fcgi-bin/client_search_cp?g_tk=5381&p=1&n=20&w=' + this.value1 + '&format=jsonp&jsonpCallback=callback&loginUin=0&hostUin=0&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0&remoteplace=txt.yqq.song&t=0&aggr=1&cr=1&catZhida=1&flag_qc=0', {
+                                jsonpCallback: 'callback'
+                            }).then((data) => {
+                                this.songlist = data.data.data.song.list
+                                console.log(data.data.data.song.list);
+                                // location.href = '#/one5';
+                            }, (err) => {
+
+                            })
+                        }
+                    },
+
+                    created() {
+                        this.$http.jsonp('https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg?g_tk=5381&uin=0&format=jsonp&jsonpCallback=callback&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=1513317614040', {
+                            jsonpCallback: 'callback'
+                        }).then((data) => {
+                            this.hotkey = data.data.data.hotkey;
+                            console.log(this.hotkey);
+                        }, (err) => {
+
+                        })
+                    }
+                }
+            },
+            {
+                path: '/one2', component: {
+                    template: '#one2',
+                    data() {
+                        return {
+                            topList: '',
+                            songList: ''
+                        }
+                    },
+                    created() {
+                        this.$http.jsonp('https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg?g_tk=5381&uin=0&format=jsonp&jsonpCallback=callback&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=1512554796112', {
+                            jsonpCallback: 'callback'
+                        }).then((data) => {
+
+                            // console.log(data.data.data)
+                            console.log(data)
+                            // console.log(data.data.data.data)
+                            console.log(data.data.data.topList)
+                            // console.log(data.data.data.topList[0].songList)
+                            // console.log(data.data.data.topList[0].songList.singername)
+                            this.topList = data.data.data.topList;
+                            this.songList = data.data.data.songList;
+                        }, (err) => {
+
+                        })
+                    }
+
+                }
+            },
+
+            // 排行榜列表
+            {
+                path: '/ranking_list/:phmid',
+                component: {
+                    template: '#ranking_list',
+                    data() {
+                        return {
+                            songlist: ''
+                        }
+                    },
+                    created() {
+                        this.$http.jsonp('https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?g_tk=5381&uin=0&format=jsonp&jsonpCallback=callback&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&tpl=3&page=detail&type=top&topid=' + this.$route.params.phmid + '&_=1512563984096', {
+                            jsonpCallback: 'callback'
+                        }).then((data) => {
+                            console.log(data.data);
+                            this.songlist = data.data.songlist;
+
+                        })
+                    },
+                }
+            },
+            { path: '/one3', component: { template: '#one3' } },
+            {
+                path: '/one4', component: {
+                    template: '#one4',
+                    data() {
+                        return {
+                            singerlist: ''
+                        }
+                    },
+                    created() {
+                        this.$http.jsonp('https://c.y.qq.com/v8/fcg-bin/v8.fcg?channel=singer&page=list&key=all_all_all&pagesize=100&pagenum=1&g_tk=5381&jsonpCallback=callback&loginUin=0&hostUin=0&format=jsonp&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0', {
+                            jsonpCallback: 'callback'
+                        }).then((data) => {
+                            console.log(data.data.data.list)
+                            this.singerlist = data.data.data.list
+
+                        })
+                    }
+                }
+            },
+            //  歌手列表详情
+            {
+                path: '/list/:sangmid',
+                component: {
+                    template: '#list',
+                    data() {
+                        return {
+                            sangmlist: '',
+                            songname: '',
+                            singer_name: ''
+
+                        }
+                    },
+                    created() {
+                        if (this.$route.params.sangmid) {
+                            var sangmid = this.$route.params.sangmid
+                            var sangname = this.$route.params.sangname
+                            this.songname = sangname
+                            this.$http.jsonp('https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg?g_tk=5381&jsonpCallback=callback&loginUin=0&hostUin=0&format=jsonp&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0&singermid=' + sangmid + '&order=listen&begin=0&num=30&songstatus=1', {
+                                jsonpCallback: 'callback'
+                            }).then((data) => {
+                                console.log(data.data.data.list)
+                                this.sangmlist = data.data.data.list
+                                console.log(this.sangmlist)
+                                this.songname = data.data.data.singer_name
+                            })
+                        }
+                    },
+                },
+
+            },
+            {
+                path: '/one5/:songmid/:songname', component: {
+                    template: '#one5',
+                    data() {
+                        return {
+                            url: '',
+                            songname: '',
+                            arr: [],
+                            songmid: '',
+                        }
+                    },
+                    // created() {
+                    //     this.songname = this.$route.params.songname
+                    //     var songmid = this.$route.params.songmid
+                    //     console.log(songmid);
+                    // },
+                    created() {
+                        if (this.$route.params.songmid) {
+                            if (this.$route.params.songmid != 0 || this.$route.params.songname != 0) {
+                                this.arr.push(this.$route.params.songname)
+                            }
+                        }
+                    },
+                    watch: {
+                        '$route.params'(a) {
+                            if (this.$route.params.songmid) {
+                                if (this.$route.params.songmid != 0 || this.$route.params.songname != 0) {
+                                    this.arr.push(this.$route.params.songname)
+                                }
+                            }
+                        }
+                    }
+
+                }
+            },
+        ]
+    })
+    new Vue({
+        el: "#box",
+        data: {
+            url: '',
+            songname: '',
+            arr: [
+                { name: '首页', path: '#/' },
+                { name: '排行榜', path: '#/one2' },
+                { name: '歌单', path: '#/one3' },
+                { name: '歌手', path: '#/one4' },
+                { name: '播放列表', path: '#/one5/主页面/0' },
+            ]
+        },
+        watch: {
+            '$route.path'(a, b) {
+                console.log(a)
+                if (a.songmid != 0 && a.songname != 0) {
+                    if (a.length > 18) {
+                        var a1 = a.slice(6, 20);
+                        this.$http.jsonp('https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?g_tk=1278911659&hostUin=0&format=jsonp&callback=callback&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0&cid=205361747&uin=0&songmid=' + a1 + '&filename=C400' + a1 + '.m4a&guid=3655047200', {
+                            jsonpCallback: 'callback'
+                        }).then((data) => {
+                            console.log(data)
+                            var filename = data.data.data.items[0].filename
+                            var vkey = data.data.data.items[0].vkey
+                            this.url = `
+					http://dl.stream.qqmus
+					ic.qq.com/${filename}?vkey=${vkey}&guid=3655047200&fromtag=66
+					`
+                        })
+                    }
+                }
+            }
+        },
+
+        router
+    })
+</script>
+
+</html>
